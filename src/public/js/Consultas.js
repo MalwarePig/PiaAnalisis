@@ -7,6 +7,12 @@ var TotalConsumos = 0;
 var ListaProductos = [];
  
 var ArchivoPlantas = [];
+
+var A_Plantas = ['PP1','PP2','PP3'];
+var TotalPlantas = A_Plantas.length;
+var A_Departamento = ['DD1111','DD2222','DD3333'];
+var TotalDepartamentos = A_Departamento.length;
+var PlantaUno = [];
 //Plantas = 2
 //Departamento = 2
 /*
@@ -68,6 +74,7 @@ function LeerLista() {
     setTimeout("LeerLista()", 1000);
     setTimeout("Comparar()", 2000);
     setTimeout("Mostrar()", 3000);
+    setTimeout("MostrarPlantas()", 4000);
     /*LeeConsumos();
     LeeDevoluciones();
     LeeProducto();*/
@@ -78,10 +85,7 @@ function Alerta(){
 }
 
 function Comparar() {
-    var A_Plantas = ['PP1','PP2','PP3'];
-    var TotalPlantas = A_Plantas.length;
-    var A_Departamento = ['DD1111','DD2222','DD3333'];
-    var TotalDepartamentos = A_Departamento.length;
+
  
     for (let p = 0; p < TotalPlantas; p++) {//For Plantas
         for (let d = 0; d < TotalDepartamentos; d++) {//For Departamentos
@@ -108,6 +112,7 @@ function Comparar() {
                                                 var Des_Productos = Productos[0].info;
                                                 var importe = Productos[0].importe;
                                                 var Fila = [Des_Productos, importe, Clave_Reporte, Planta,Departamento,Producto,cantidadC];  
+
                                                 A_Consumos.push(Fila);                              
                                             }
                                         }
@@ -128,6 +133,7 @@ function Comparar() {
 
 function Mostrar(){
     console.log(A_Consumos.length);
+
     for (let index = 0; index < A_Consumos.length; index+=2) {
         //console.log(A_Consumos[index]);
         //console.log("Cod_Producto: " +A_Consumos[index][5] + " Des_Producto: " + A_Consumos[index][0]+ " Consumo: " + A_Consumos[index][6] + " Importe: " + A_Consumos[index][1] + " Consumo: " + A_Consumos[index+1][6] + " importe: " + A_Consumos[index+1][1]);
@@ -135,14 +141,50 @@ function Mostrar(){
             url: '/Devoluciones/' + A_Consumos[index][3] + " " + A_Consumos[index][4] + " " + A_Consumos[index][5],
             success: function (Devoluciones) {
                 if(Devoluciones.length>0){
-                    console.log("Planta: " +A_Consumos[index][3] + " Departamento: "+ A_Consumos[index][4] + " Cod_Producto: " +A_Consumos[index][5] + " Des_Producto: " + A_Consumos[index][0]+ " Consumo: " + A_Consumos[index][6] + " Importe: " + A_Consumos[index][1] + " Consumo: " + Devoluciones[0].cantidadC + " importe: " + A_Consumos[index+1][1]);
-                }
+                   // console.table(Devoluciones);
+                    if( (Devoluciones[0].Planta == A_Consumos[index][3]) && (Devoluciones[0].Departamento == A_Consumos[index][4]) && (Devoluciones[0].Producto == A_Consumos[index][5])){
+                        //console.log("Reporte: " + A_Consumos[index][2]+" Planta: " +A_Consumos[index][3] + " Departamento: "+ A_Consumos[index][4] + " Cod_Producto: " +A_Consumos[index][5] + " Des_Producto: " + A_Consumos[index][0]+ " Consumo: " + A_Consumos[index][6] + " Importe: " + A_Consumos[index][1] + " Reporte: " + A_Consumos[index+1][2] + " Consumo: " + Devoluciones[0].cantidadC + " importe: " + A_Consumos[index+1][1]);
+                        if(A_Consumos[index][3] === 'PP1' && Devoluciones[0].Planta == A_Consumos[index][3]){
+                            var Fila = {
+                                Reporte: A_Consumos[index][2],
+                                Planta: A_Consumos[index][3],
+                                Departamento: A_Consumos[index][4],
+                                Cod_Producto: A_Consumos[index][5],
+                                Des_Producto: A_Consumos[index][0],
+                                Consumo: (A_Consumos[index][6] - (Devoluciones[0].cantidadC || 0)),
+                                Importe: (A_Consumos[index][6] - (Devoluciones[0].cantidadC || 0)) * A_Consumos[index][1],
+                                Reporte: A_Consumos[index+1][2] || 'NA',
+                                Consumo: Devoluciones[0].cantidadC,
+                                importe: ( Devoluciones[0].cantidadC * A_Consumos[index+1][1] )
+                            }
+                           // var lista = [A_Consumos[index][2],A_Consumos[index][3],A_Consumos[index][4],A_Consumos[index][5],A_Consumos[index][0],A_Consumos[index][6], A_Consumos[index][1],A_Consumos[index+1][2], Devoluciones[0].cantidadC,A_Consumos[index+1][1]];
+                            PlantaUno.push(Fila);
+                        }
 
+                    }
+                }
                 //console.table(Devoluciones);
             } //Funcion success
         }); //Ajax
     }
 }
+
+function MostrarPlantas ( ) {
+    console.table(PlantaUno);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function Invertido(){
     var A_Plantas = ['PP1','PP2','PP3'];

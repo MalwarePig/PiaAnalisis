@@ -1,0 +1,7 @@
+ClaveTabla,LlaveTabla,Nombre
+T04,PP1,PlantaM
+T04,PP2,PlantaB
+T05,PP1 DD1111,Produccion
+T05,PP1 DD2222,Almacen
+T05,PP2 DD1111,Ventas
+T05,PP2 DD2222,Compras

@@ -22,8 +22,8 @@ router.get('/ListaProductos', ReporteController.ListaProductos);
 router.get('/ProductoActual/:Producto', ReporteController.ProductoActual);
  
 //Consultar Plantas
-router.get('/Planta/:Planta', ReporteController.Planta);
+router.get('/Planta/', ReporteController.Planta);
 //Consultar Plantas
-router.get('/Departamento/:Departamento', ReporteController.Departamento);
+router.get('/Departamento/', ReporteController.Departamento);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = router;

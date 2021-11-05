@@ -72,6 +72,8 @@ Controller.ListaProductos = (req, res) => {
             if (err) {
                 console.log('Error al descontar almacen' + err);
             }
+            console.table(rows);
+            
             res.json(rows);
             //console.table(fields);
         });
@@ -85,12 +87,11 @@ Controller.Planta = (req, res) => {
         const {
             Planta
         } = req.params;
- console.log("Planta: " +Planta);
-        conn.query("SELECT Nombre FROM tablas WHERE LlaveTabla = '"+Planta+"'", (err, Planta) => {
+        conn.query("SELECT * FROM tablas WHERE ClaveTabla = 'T04'", (err, Planta) => {
             if (err) {
                 console.log('Error de lectura Devoluciones');
             }
-            console.table(Planta);
+            //console.table(Planta);
             res.json(Planta);
         });
     });
@@ -102,8 +103,7 @@ Controller.Departamento = (req, res) => {
         const {
             Departamento
         } = req.params;
- console.log("Departamento: " +Departamento);
-        conn.query("SELECT Nombre FROM tablas WHERE LlaveTabla = '"+Departamento+"'", (err, Departamento) => {
+        conn.query("SELECT * FROM tablas WHERE ClaveTabla = 'T05'", (err, Departamento) => {
             if (err) {
                 console.log('Error de lectura Devoluciones');
             }
